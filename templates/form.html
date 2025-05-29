@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Submit Form</title>
+</head>
+<body>
+  <h1>Submit Your Data</h1>
+  <form id="dataForm">
+    <input type="text" name="name" placeholder="Enter name" required />
+    <input type="email" name="email" placeholder="Enter email" required />
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="error" style="color: red;"></div>
+
+  <script>
+    document.getElementById("dataForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const res = await fetch("http://localhost:5000/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          window.location.href = "/success";
+        } else {
+          document.getElementById("error").textContent = result.error || "Submission failed";
+        }
+      } catch (err) {
+        document.getElementById("error").textContent = err.message;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
@@ -36,3 +37,19 @@ def submit_data():
 
 if __name__ == "__main__":
     app.run(port=5000)
+=======
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route("/")
+def form():
+    return render_template("form.html")
+
+@app.route("/success")
+def success():
+    return render_template("success.html")
+
+if __name__ == "__main__":
+    app.run(port=5001)
+>>>>>>> cc80169c4bc613a93ea2beb17c707cfa348dea21
